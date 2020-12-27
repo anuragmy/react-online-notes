@@ -9,7 +9,7 @@ const initialState = {
   notes: [
     {
       id: 1,
-      date: moment().format("YYYY-MM-DD"),
+      date: "2020-12-10",
       title: "My forst note",
       description: "Lorem I as good",
     },
@@ -135,19 +135,20 @@ export default (state = initialState, action = {}) => {
       console.log(filteredNotes);
       return state;
     case actionTypes.SORT_NOTES:
-      return {
-        ...state,
-        notes: notes.sort((a, b) =>
-          payload === "asc"
-            ? moment(a.date) - moment(b.date)
-              ? 1
-              : -1
-            : moment(b.date) - moment(a.date)
-            ? 1
-            : -1
-        ),
-      };
-
+      const sorted = notes.sort((a, b) => new Date(a.date) - new Date(b.date) ? -1 : 1);
+      console.log('sorted', sorted);
+      // return {
+      //   ...state,
+      //   notes:
+      //     payload === "dsc"
+      //       ? notes.sort((a, b) =>
+      //         new Date(a.date) - new Date(b.date) ? -1 : 1
+      //       )
+      //       : notes.sort((a, b) =>
+      //         new Date(a.date) - new Date(b.date) ? 1 : -1
+      //       ),
+      // };
+      return state;
     default:
       return state;
   }

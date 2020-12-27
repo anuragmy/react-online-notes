@@ -1,6 +1,6 @@
 import React from "react";
 import { DatePicker } from "antd";
-import { Button, Input, Select } from "semantic-ui-react";
+import { Button, Select } from "semantic-ui-react";
 import { useDispatch } from "react-redux";
 import moment from "moment";
 import { sortNotes, filterNotes, clearDate } from "../../actions/notesActions";
