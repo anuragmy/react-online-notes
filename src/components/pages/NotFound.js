@@ -1,4 +1,5 @@
-import React from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
 
 export default () => {
   return (
@@ -7,6 +8,7 @@ export default () => {
         <span className="text-danger">404</span> Page Not Found
       </h1>
       <p className="lead">Sorry, that page does not exist</p>
+      <Link to="/">Home</Link>
     </div>
   );
 };

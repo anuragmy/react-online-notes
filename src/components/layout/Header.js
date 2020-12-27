@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars*/
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import React from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -14,7 +14,7 @@ const Header = () => {
         <div>
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <Link to="/notes/add" className="nav-link">
+              <Link to="/add" className="nav-link">
                 <i className="fas fa-plus" /> Add Note
               </Link>
             </li>
@@ -26,11 +26,11 @@ const Header = () => {
 };
 
 Header.defaultProps = {
-  branding: 'My App'
+  branding: "My App",
 };
 
 Header.propTypes = {
-  branding: PropTypes.string.isRequired
+  branding: PropTypes.string.isRequired,
 };
 
 export default Header;

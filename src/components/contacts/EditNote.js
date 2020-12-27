@@ -1,56 +1,122 @@
 /* eslint-disable no-unused-vars*/
 
-import React, { Component } from "react";
+import React from "react";
+import { useDispatch } from "react-redux";
+import { message } from "antd";
 import ReactQuill from "react-quill";
 import PropTypes from "prop-types";
+import { useHistory, useLocation, Redirect } from "react-router-dom";
 import { Form, Button } from "semantic-ui-react";
 import { connect } from "react-redux";
-import { getContact, updateContact } from "../../actions/contactActions";
+import { addNote, editNote } from "../../actions/notesActions";
 
 const EditNote = (props) => {
-	const { id } = props.match.params;
-	const { notes } = props;
-	const [text, setText] = React.useState("");
-	const [title, setTitle] = React.useState("");
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const { notes, match } = props;
 
-	React.useEffect(() => {
-		// setting the note based on ID
-	}, []);
+  // states
+  const [description, setText] = React.useState("");
+  const [title, setTitle] = React.useState("");
+  const [id, setId] = React.useState("");
+  const [submitType, setSubmitType] = React.useState("Update");
+  const [type, setType] = React.useState("update");
 
-	const handleChange = (value) => setText(value);
-	const handleChangeTitle = (e) => setTitle(e.target.value);
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		console.log("submit clicked");
-	};
+  React.useEffect(() => {
+    // checking type of form based on route
+    if (location) {
+      if (location.pathname === "/add") {
+        setSubmitType("Add");
+        setType("add");
+      }
 
+      if (match) {
+        // setting the note based on ID or new note form
+        const note = notes.filter((note) => note.id == match.params.id);
+        if (!note.length) {
+          history.push("/");
+        } else {
+          // formating html text to string,  coming from editor
+          setId(note[0].id);
+          setText(note[0].description.replace(/<[^>]+>/g, ""));
+          setTitle(note[0].title);
+        }
+      }
+    }
+  }, [location, match]);
 
-	return (
-		<React.Fragment>
-			<Form style={{ marginTop: 20 }}>
-				<Form.Field required>
-					<label required>Title</label>
-					<input placeholder="Title" onChange={handleChangeTitle} value={title} />
-				</Form.Field>
-				<ReactQuill
-					value={text}
-					placeholder="Enter your notes here!"
-					onChange={handleChange}
-				/>
-				<Button
-					primary
-					type="submit"
-					onClick={handleSubmit}
-					content="Update"
-					style={{ marginTop: 20 }}
-				/>
-			</Form>
-		</React.Fragment>
-	);
+  const handleChange = (value) => setText(value);
+  const handleChangeTitle = (e) => setTitle(e.target.value);
+  const Back = () => history.push("/");
+
+  const modules = {
+    toolbar: ["bold", "italic", "underline", "strike"],
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!title) return message.error("Please add title!", 1);
+    if (!description) return message.error("Please add description!", 1);
+    if (type === "add") {
+      message.success("Note Added!");
+      dispatch(
+        addNote({ title, description: description.replace(/<[^>]+>/g, "") })
+      );
+    } else
+      dispatch(
+        editNote({
+          title,
+          description: description.replace(/<[^>]+>/g, ""),
+          id,
+        })
+      );
+    history.push("/");
+  };
+
+  return (
+    <React.Fragment>
+      <Form style={{ marginTop: 20 }}>
+        <Form.Field required>
+          <label required>Title</label>
+          <input
+            placeholder="Title"
+            onChange={handleChangeTitle}
+            value={title}
+          />
+        </Form.Field>
+        <ReactQuill
+          value={description}
+          placeholder="Enter your notes here!"
+          onChange={handleChange}
+          modules={modules}
+        />
+        <Button
+          primary
+          onClick={handleSubmit}
+          content={submitType}
+          style={{ marginTop: 20 }}
+        />
+        <Button
+          negative
+          onClick={Back}
+          content="Cancel"
+          style={{ marginTop: 20 }}
+        />
+      </Form>
+      <style jsx="true">
+        {`
+          .ql-editor {
+            min-height: 200px;
+          }
+        `}
+      </style>
+    </React.Fragment>
+  );
 };
 
 const mapStateToProps = ({ notes }) => ({
-	notes: notes.notes,
+  notes: notes.notes,
 });
 
 export default connect(mapStateToProps)(EditNote);

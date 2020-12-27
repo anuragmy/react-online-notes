@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Contacts from "./components/contacts/Contacts";
-import AddContact from "./components/contacts/AddContact";
+import NotesList from "./components/contacts/NotesList";
+import AddNote from "./components/contacts/AddNote";
 import EditNote from "./components/contacts/EditNote";
 import Header from "./components/layout/Header";
 import NotFound from "./components/pages/NotFound";
@@ -12,15 +12,18 @@ const Routes = () => {
       <React.Fragment>
         <Header />
         <div className="container">
+          <h1 className="display-4 mb-2">
+            <span className="text-danger">My</span> Notes
+          </h1>
           <Switch>
-            <Route exact path="/" component={Contacts} />
-            <Route exact path="/notes/add" component={AddContact} />
-            <Route exact path="/notes/edit/:id" component={EditNote} />
+            <Route exact path="/" component={NotesList} />
+            <Route exact path="/add" component={AddNote} />
+            <Route exact path="/edit/:id" component={EditNote} />
             <Route component={NotFound} />
           </Switch>
         </div>
       </React.Fragment>
-    </Router >
+    </Router>
   );
 };
 
