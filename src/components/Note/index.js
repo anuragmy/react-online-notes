@@ -4,10 +4,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import ShowMore from "react-show-more";
+import moment from "moment";
 import { Card } from "semantic-ui-react";
 import { useDispatch } from "react-redux";
 import { deleteNote } from "../../actions/notesActions";
-import DeleteModal from "./DeleteModal";
+import DeleteModal from "../DeleteModal";
 
 const Note = (props) => {
   const { id, title, description, date } = props.note;

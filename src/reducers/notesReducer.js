@@ -84,6 +84,7 @@ const initialState = {
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.It was popu",
     },
   ],
+  filteredNotes: []
 };
 
 export default (state = initialState, action = {}) => {
@@ -129,31 +130,31 @@ export default (state = initialState, action = {}) => {
     case actionTypes.FILTER_NOTES:
       const { startDate, endDate } = payload;
       console.log(payload);
+      console.log('startDate', new Date(startDate));
+      console.log('endDate', new Date(endDate));
       const filteredNotes = notes.filter((note) =>
-        moment(note.date).isBetween(startDate, endDate, undefined, "[]")
-      );
-      console.log(filteredNotes);
-      return state;
-    case actionTypes.SORT_NOTES:
+        new Date(note.date).getDate() >= new Date(startDate).getDate() && new Date(note.date).getDate() <= new Date(endDate).getDate())
+      console.log('filteredNotes', filteredNotes);
       return {
         ...state,
-        notes: payload === 'dsc' ?
-          notes.sort((a, b) => new Date(a.date).getTime() < new Date(b.date).getTime() ? 1 : -1)
-          :
-          notes.sort((a, b) => new Date(a.date).getTime() > new Date(b.date).getTime() ? 1 : -1)
+        filteredNotes,
       }
-    // return {
-    //   ...state,
-    //   notes:
-    //     payload === "dsc"
-    //       ? notes.sort((a, b) =>
-    //         new Date(a.date) - new Date(b.date) ? -1 : 1
-    //       )
-    //       : notes.sort((a, b) =>
-    //         new Date(a.date) - new Date(b.date) ? 1 : -1
-    //       ),
-    // };
-
+    case actionTypes.SORT_NOTES:
+      let type = 'notes';
+      let newNotes = [];
+      if (payload === 'desc') {
+        newNotes = notes.sort((a, b) => new Date(b.date) - new Date(a.date) ? 1 : -1);
+      }
+      else {
+        newNotes = notes.sort((a, b) => new Date(a.date) - new Date(b.date) ? -1 : 1);
+      }
+      if (filteredNotes.length) {
+        type = 'filteredNotes';
+      }
+      return {
+        ...state,
+        [type]: newNotes
+      }
     default:
       return state;
   }

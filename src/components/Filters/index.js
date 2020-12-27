@@ -11,8 +11,8 @@ const Filters = () => {
 
   const [sort, setSort] = React.useState(false);
   const [filter, setFilter] = React.useState("");
-  const [startDate, setStartDate] = React.useState("");
-  const [endDate, setEndDate] = React.useState("");
+  const [, setStartDate] = React.useState("");
+  const [, setEndDate] = React.useState("");
 
   const filterDates = (value) => {
     // moment conversion to date format
@@ -27,12 +27,8 @@ const Filters = () => {
 
     dispatch(
       filterNotes({
-        startDate: startDate
-          ? startDate
-          : moment(moment(value)._i[0]).format("YYYY-MM-DD"),
-        endDate: endDate
-          ? endDate
-          : moment(moment(value)._i[1]).format("YYYY-MM-DD"),
+        startDate: moment(moment(value)._i[0]).format("YYYY-MM-DD"),
+        endDate: moment(moment(value)._i[1]).format("YYYY-MM-DD"),
       })
     );
   };
@@ -41,21 +37,17 @@ const Filters = () => {
     { key: 1, value: "days", text: "Filter By Days" },
     { key: 2, value: "month", text: "Filter By Month" },
     { key: 3, value: "year", text: "Filter By Year" },
-    { key: 4, value: "clear", text: "Clear" },
   ];
 
   const changeFilter = (e, { value }) => setFilter(value);
   const displayFilter = () => {
-    if (filter === "clear") {
-      console.log("clear called");
-    }
     switch (filter) {
       case "days":
-        return <RangePicker onChange={filterDates} />;
+        return <RangePicker style={{ marginTop: 10 }} onChange={filterDates} />;
       case "month":
-        return <RangePicker picker="month" onChange={filterDates} />;
+        return <RangePicker style={{ marginTop: 10 }} picker="month" onChange={filterDates} />;
       case "year":
-        return <RangePicker picker="year" onChange={filterDates} />;
+        return <RangePicker style={{ marginTop: 10 }} picker="year" onChange={filterDates} />;
       default:
         return "";
     }
@@ -74,13 +66,13 @@ const Filters = () => {
       <Button
         style={{ marginTop: 10 }}
         primary
-        content={`Sort ${sort ? "Ascending" : "Descending"}`}
-        icon={`${sort ? "arrow up" : "arrow down"}`}
+        content={`Sort ${sort ? "Descending" : 'Ascending'}`}
+        icon={`${sort ? "arrow down" : "arrow up"}`}
         labelPosition="right"
         onClick={changeOrder}
       />
-      <br />
       <Select
+        style={{ marginTop: 10 }}
         placeholder="Select Filter"
         options={FilterOptions}
         onChange={changeFilter}

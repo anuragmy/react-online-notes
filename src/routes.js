@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import NotesList from "./components/contacts/NotesList";
-import AddNote from "./components/contacts/AddNote";
-import EditNote from "./components/contacts/EditNote";
-import Header from "./components/layout/Header";
-import NotFound from "./components/pages/NotFound";
+import NotesList from "./components/NotesList";
+import AddNote from "./components/AddNote";
+import EditNote from "./components/EditNote";
+import Header from "./components/Header";
+import NotFound from "./components/NotFound";
 
 const Routes = () => {
   return (
