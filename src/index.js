@@ -9,9 +9,9 @@ import registerServiceWorker from "./registerServiceWorker";
 
 ReactDOM.render(
   <Provider store={store}>
-    {/* <PersistGate persistor={persistor}> */}
-    <App />
-    {/* </PersistGate> */}
+    <PersistGate persistor={persistor}>
+      <App />
+    </PersistGate>
   </Provider>,
   document.getElementById("root")
 );

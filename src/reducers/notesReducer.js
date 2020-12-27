@@ -135,20 +135,25 @@ export default (state = initialState, action = {}) => {
       console.log(filteredNotes);
       return state;
     case actionTypes.SORT_NOTES:
-      const sorted = notes.sort((a, b) => new Date(a.date) - new Date(b.date) ? -1 : 1);
-      console.log('sorted', sorted);
-      // return {
-      //   ...state,
-      //   notes:
-      //     payload === "dsc"
-      //       ? notes.sort((a, b) =>
-      //         new Date(a.date) - new Date(b.date) ? -1 : 1
-      //       )
-      //       : notes.sort((a, b) =>
-      //         new Date(a.date) - new Date(b.date) ? 1 : -1
-      //       ),
-      // };
-      return state;
+      return {
+        ...state,
+        notes: payload === 'dsc' ?
+          notes.sort((a, b) => new Date(a.date).getTime() < new Date(b.date).getTime() ? 1 : -1)
+          :
+          notes.sort((a, b) => new Date(a.date).getTime() > new Date(b.date).getTime() ? 1 : -1)
+      }
+    // return {
+    //   ...state,
+    //   notes:
+    //     payload === "dsc"
+    //       ? notes.sort((a, b) =>
+    //         new Date(a.date) - new Date(b.date) ? -1 : 1
+    //       )
+    //       : notes.sort((a, b) =>
+    //         new Date(a.date) - new Date(b.date) ? 1 : -1
+    //       ),
+    // };
+
     default:
       return state;
   }
