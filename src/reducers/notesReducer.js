@@ -53,14 +53,12 @@ export default (state = initialState, action = {}) => {
         return {
           ...state,
           notes: dec.slice(0).reverse().map(note => note),
-          filteredNotes: dec.slice(0).reverse().map(note => note),
         }
       }
       else if (payload === 'asc') {
         return {
           ...state,
           notes: notes.sort((a, b) => new moment(a.date).format('DD/MM/YYYY') - new moment(b.date).format('DD/MM/YYYY')),
-          filteredNotes: notes.sort((a, b) => new moment(a.date).format('DD/MM/YYYY') - new moment(b.date).format('DD/MM/YYYY')),
         }
       }
       else return;
