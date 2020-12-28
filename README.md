@@ -8,4 +8,4 @@ A Notes Manager, Single Page App to add, update and delete notes using React and
 
 2. <code> npm install </code>
 
-3. <code> npm start
+3. <code> npm start </code>
