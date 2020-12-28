@@ -1,15 +1,16 @@
 import React from "react";
 import { DatePicker } from "antd";
-import { Button, Select } from "semantic-ui-react";
+import { Button, Select, Input } from "semantic-ui-react";
 import { useDispatch } from "react-redux";
 import moment from "moment";
-import { sortNotes, filterNotes } from "../../actions/notesActions";
+import { sortNotes, filterNotes, searchNote } from "../../actions/notesActions";
 
 const Filters = () => {
   const dispatch = useDispatch();
   const { RangePicker } = DatePicker;
 
   const [sort, setSort] = React.useState(false);
+  const [text, setText] = React.useState("");
   const [filter, setFilter] = React.useState("");
   const [, setStartDate] = React.useState("");
   const [, setEndDate] = React.useState("");
@@ -39,15 +40,32 @@ const Filters = () => {
     { key: 3, value: "year", text: "Filter By Year" },
   ];
 
+  const onChange = (e) => {
+    setText(e.target.value);
+    dispatch(searchNote(e.target.value));
+  }
+
   const changeFilter = (e, { value }) => setFilter(value);
   const displayFilter = () => {
     switch (filter) {
       case "days":
         return <RangePicker style={{ marginTop: 10 }} onChange={filterDates} />;
       case "month":
-        return <RangePicker style={{ marginTop: 10 }} picker="month" onChange={filterDates} />;
+        return (
+          <RangePicker
+            style={{ marginTop: 10 }}
+            picker="month"
+            onChange={filterDates}
+          />
+        );
       case "year":
-        return <RangePicker style={{ marginTop: 10 }} picker="year" onChange={filterDates} />;
+        return (
+          <RangePicker
+            style={{ marginTop: 10 }}
+            picker="year"
+            onChange={filterDates}
+          />
+        );
       default:
         return "";
     }
@@ -56,17 +74,24 @@ const Filters = () => {
   const changeOrder = () => {
     setSort(!sort);
     const newSort = !sort;
-    console.log('newSort', newSort)
+    console.log("newSort", newSort);
     if (newSort === true) dispatch(sortNotes("asc"));
     else dispatch(sortNotes("desc"));
   };
 
   return (
     <div style={{ marginTop: 10 }}>
+      <Input
+        icon="search"
+        placeholder="Title..."
+        value={text}
+        onChange={onChange}
+        style={{ width: "100%" }}
+      />
       <Button
         style={{ marginTop: 10 }}
         primary
-        content={`Sort ${sort ? "Descending" : 'Ascending'}`}
+        content={`Sort ${sort ? "Descending" : "Ascending"}`}
         icon={`${sort ? "arrow down" : "arrow up"}`}
         labelPosition="right"
         onClick={changeOrder}
