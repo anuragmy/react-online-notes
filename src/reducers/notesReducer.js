@@ -1,43 +1,14 @@
 /* eslint-disable no-unused-vars*/
 /* eslint-disable eqeqeq*/
+/* eslint-disable array-callback-return*/
 import moment from "moment";
 import { message } from "antd";
 import * as actionTypes from "../actions/types";
+import key from 'react-key-string';
+
 
 const initialState = {
-  notes: [
-    {
-      id: 1,
-      date: "2020-12-10",
-      title: "My forst note",
-      description: "Lorem I as good",
-    },
-    {
-      id: 2,
-      date: "2020-12-10",
-      title: "My forst note",
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.It was popu",
-    },
-    {
-      id: 3,
-      date: "2020-12-11",
-      title: "My forst note",
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.It was popu",
-    },
-    {
-      id: 4,
-      date: "2020-12-12",
-      title: "My forst note",
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.It was popu",
-    },
-  ],
-
-  filteredNotes: [],
-
-
+  notes: [],
 };
 
 export default (state = initialState, action = {}) => {
@@ -57,7 +28,7 @@ export default (state = initialState, action = {}) => {
         notes: [
           ...notes,
           {
-            id: notes.length + 1,
+            id: key.generate(),
             date: moment().format("YYYY-MM-DD"),
             ...payload,
           },
@@ -75,27 +46,24 @@ export default (state = initialState, action = {}) => {
             : note
         ),
       };
-    case actionTypes.CLEAR_DATE:
-      console.log("clear state called");
-      console.log(state);
-      return state;
 
-    case actionTypes.FILTER_NOTES:
-      const { startDate, endDate } = payload;
-      console.log(payload);
-      const filteredNotes = notes.filter((note) =>
-        new Date(note.date).getDate() >= new Date(startDate).getDate() && new Date(note.date).getDate() <= new Date(endDate).getDate())
-      console.log('filteredNotes', filteredNotes);
-      return {
-        ...state,
-        filteredNotes,
-      }
     case actionTypes.SORT_NOTES:
-      console.log(state.notes)
-      return {
-        ...state,
-        notes: notes.sort((a, b) => new Date(b.date) - new Date(a.date) ? 1 : -1),
+      if (payload === 'desc') {
+        const dec = notes.sort((a, b) => new moment(b.date).format('DD/MM/YYYY') - new moment(a.date).format('DD/MM/YYYY'));
+        return {
+          ...state,
+          notes: dec.slice(0).reverse().map(note => note),
+          filteredNotes: dec.slice(0).reverse().map(note => note),
+        }
       }
+      else if (payload === 'asc') {
+        return {
+          ...state,
+          notes: notes.sort((a, b) => new moment(a.date).format('DD/MM/YYYY') - new moment(b.date).format('DD/MM/YYYY')),
+          filteredNotes: notes.sort((a, b) => new moment(a.date).format('DD/MM/YYYY') - new moment(b.date).format('DD/MM/YYYY')),
+        }
+      }
+      else return;
     case actionTypes.SEARCH_NOTE:
       console.log('pau', payload)
       return {

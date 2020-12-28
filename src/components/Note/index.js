@@ -49,7 +49,7 @@ const Note = (props) => {
             />
           </Link>
           <Card.Header>{title}</Card.Header>
-          <Card.Meta>{date}</Card.Meta>
+          <Card.Meta>{moment(date).format('Do MMM YYYY')}</Card.Meta>
           <Card.Description>
             <ShowMore
               lines={1}

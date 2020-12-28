@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import EmptyDashboard from "../EmptyDashboard";
 import Filters from "../Filters";
 
-const NotesList = ({ notes, filteredNotes }) => {
+const NotesList = ({ notes, filteredNotes = [] }) => {
   return !notes.length ? (
     <EmptyDashboard />
   ) : (
@@ -21,9 +21,9 @@ const NotesList = ({ notes, filteredNotes }) => {
     );
 };
 
-const mapStateToProps = ({ notes }) => ({
-  notes: notes.notes,
-  filteredNotes: notes.filteredNotes,
+const mapStateToProps = (state) => ({
+  notes: state.notes.notes,
+  filteredNotes: state.notes.filteredNotes,
 });
 
 NotesList.propTypes = {

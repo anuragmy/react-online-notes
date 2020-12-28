@@ -4,7 +4,7 @@ import { DatePicker } from "antd";
 import { Button, Select, Input } from "semantic-ui-react";
 import { useDispatch } from "react-redux";
 import moment from "moment";
-import { sortNotes, filterNotes, searchNote } from "../../actions/notesActions";
+import { sortNotes, searchNote, filterNotes } from "../../actions/notesActions";
 
 const Filters = () => {
   const dispatch = useDispatch();
@@ -74,9 +74,7 @@ const Filters = () => {
 
   const changeOrder = () => {
     setSort(!sort);
-    const newSort = !sort;
-    console.log("newSort", newSort);
-    if (newSort === true) dispatch(sortNotes("asc"));
+    if (!sort) dispatch(sortNotes("asc"));
     else dispatch(sortNotes("desc"));
   };
 
@@ -93,7 +91,7 @@ const Filters = () => {
       <Button
         style={{ marginTop: 10 }}
         primary
-        content={`Sort ${sort ? "Descending" : "Ascending"}`}
+        content={`${sort ? "old" : "new"} first`}
         icon={`${sort ? "arrow down" : "arrow up"}`}
         labelPosition="right"
         onClick={changeOrder}

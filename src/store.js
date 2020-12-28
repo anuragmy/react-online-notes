@@ -8,7 +8,7 @@ import rootReducer from "./reducers";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["notes.notes"],
+  whitelist: ["notes"],
 };
 
 const middlewares = [Logger];
