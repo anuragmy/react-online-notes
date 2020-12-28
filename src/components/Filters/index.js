@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { DatePicker } from "antd";
 import { Button, Select, Input } from "semantic-ui-react";
@@ -81,13 +82,14 @@ const Filters = () => {
 
   return (
     <div style={{ marginTop: 10 }}>
-      <Input
+      {/* <Input
         icon="search"
         placeholder="Title..."
         value={text}
         onChange={onChange}
-        style={{ width: "100%" }}
+        style={{ width: "70%", marginRight: 'auto' }}
       />
+      <br /> */}
       <Button
         style={{ marginTop: 10 }}
         primary

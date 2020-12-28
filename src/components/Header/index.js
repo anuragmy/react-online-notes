@@ -14,7 +14,7 @@ const Header = () => {
         <div>
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <Link to="/add" className="nav-link">
+              <Link to="/add" className="nav-link" style={{ color: 'white' }}>
                 <i className="fas fa-plus" /> Add Note
               </Link>
             </li>

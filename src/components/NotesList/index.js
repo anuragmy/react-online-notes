@@ -1,15 +1,12 @@
-/* eslint-disable no-unused-vars*/
-
 import React from "react";
 import Note from "../Note";
 import PropTypes from "prop-types";
-import { Input } from "semantic-ui-react";
+// import { Input } from "semantic-ui-react";
 import { connect } from "react-redux";
 import EmptyDashboard from "../EmptyDashboard";
 import Filters from "../Filters";
 
-const NotesList = ({ notes, check, filteredNotes }) => {
-  console.log(' this calle on chegae', notes);
+const NotesList = ({ notes, filteredNotes }) => {
   return !notes.length ? (
     <EmptyDashboard />
   ) : (
