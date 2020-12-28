@@ -13,6 +13,7 @@ const DeleteModal = ({ close, response }) => {
         height: "auto",
         top: "auto",
         left: "auto",
+        width: 'initial',
       }}
     >
       <Modal.Header>Delete Note</Modal.Header>
