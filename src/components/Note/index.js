@@ -12,6 +12,7 @@ import DeleteModal from "../DeleteModal";
 
 const Note = (props) => {
   const { id, title, description, date } = props.note;
+  console.log('thia si id', id)
   const dispatch = useDispatch();
   const [modal, setModal] = React.useState(false);
 

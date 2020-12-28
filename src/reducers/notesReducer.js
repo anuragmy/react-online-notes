@@ -19,7 +19,7 @@ export default (state = initialState, action = {}) => {
       message.success("Note deleted!");
       return {
         ...state,
-        notes: notes.filter((contact) => contact.id !== payload),
+        notes: notes.filter((note) => note.id !== payload),
       };
 
     case actionTypes.ADD_NOTE:

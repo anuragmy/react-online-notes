@@ -91,7 +91,7 @@ const Filters = () => {
       <Button
         style={{ marginTop: 10 }}
         primary
-        content={`${sort ? "old" : "new"} first`}
+        content={`${sort ? "Oldest" : "Newest"} first`}
         icon={`${sort ? "arrow down" : "arrow up"}`}
         labelPosition="right"
         onClick={changeOrder}
