@@ -1,9 +1,11 @@
-# contact-manager
-A Contact Manager Single Page App to add, update and delete contacts using React and Redux
+# Online Notes App
 
-# to run project 
-1) clone repository
+A Notes Manager, Single Page App to add, update and delete notes using React and Redux
 
-2) <code> npm install </code>
+# to run project
 
-3) <code> npm  start
+1. clone repository
+
+2. <code> npm install </code>
+
+3. <code> npm start
