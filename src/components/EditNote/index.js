@@ -3,7 +3,7 @@
 
 import React from "react";
 import { useDispatch } from "react-redux";
-import { message } from "antd";
+import { message, DatePicker } from "antd";
 import ReactQuill from "react-quill";
 import PropTypes from "prop-types";
 import { useHistory, useLocation, Redirect } from "react-router-dom";
@@ -46,7 +46,9 @@ const EditNote = (props) => {
       }
     }
   }, [location, match]);
-
+  function onChange(date, dateString) {
+    console.log(date, dateString);
+  }
   const handleChange = (value) => setText(value);
   const handleChangeTitle = (e) => setTitle(e.target.value);
   const Back = () => history.push("/");
@@ -86,6 +88,10 @@ const EditNote = (props) => {
             value={title}
           />
         </Form.Field>
+
+        <label>Date</label>
+        <DatePicker onChange={onChange} />
+
         <ReactQuill
           value={description}
           placeholder="Enter your notes here!"
