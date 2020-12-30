@@ -5,3 +5,4 @@ export const SEARCH_NOTE = "SEARCH_NOTE";
 export const SORT_NOTES = "SORT_NOTES";
 export const FILTER_NOTES = "FILTER_NOTES";
 export const CLEAR_DATE = "CLEAR_DATE";
+export const RENDER_NOTES = "RENDER_NOTES";

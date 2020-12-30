@@ -12,7 +12,7 @@ import DeleteModal from "../DeleteModal";
 
 const Note = (props) => {
   const { id, title, description, date } = props.note;
-  console.log('thia si id', id)
+  console.log("thia si id", date);
   const dispatch = useDispatch();
   const [modal, setModal] = React.useState(false);
 
@@ -50,7 +50,7 @@ const Note = (props) => {
             />
           </Link>
           <Card.Header>{title}</Card.Header>
-          <Card.Meta>{moment(date).format('Do MMM YYYY')}</Card.Meta>
+          <Card.Meta>{moment(date).format("Do MMM YYYY")}</Card.Meta>
           <Card.Description>
             <ShowMore
               lines={1}
