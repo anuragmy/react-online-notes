@@ -1,12 +1,14 @@
 /* eslint-disable no-unused-vars*/
 /* eslint-disable eqeqeq*/
+/* eslint-disable react/jsx-no-duplicate-props*/
 
 import React from "react";
 import { useDispatch } from "react-redux";
-import { message } from "antd";
+import { message, DatePicker } from "antd";
 import ReactQuill from "react-quill";
 import PropTypes from "prop-types";
-import { useHistory, useLocation, Redirect } from "react-router-dom";
+import moment from "moment";
+import { useHistory, useLocation } from "react-router-dom";
 import { Form, Button } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { addNote, editNote } from "../../actions/notesActions";
@@ -17,9 +19,11 @@ const EditNote = (props) => {
   const location = useLocation();
   const { notes, match } = props;
 
+  console.log("m", moment().format("DD-MM-YYYY"));
   // states
   const [description, setText] = React.useState("");
   const [title, setTitle] = React.useState("");
+  const [date, setDate] = React.useState(moment());
   const [id, setId] = React.useState("");
   const [submitType, setSubmitType] = React.useState("Update");
   const [type, setType] = React.useState("update");
@@ -47,6 +51,12 @@ const EditNote = (props) => {
     }
   }, [location, match]);
 
+  const changeDate = (incomingDate) => {
+    console.log("change date", incomingDate);
+    // console.log(moment(incomingDate._d).format("YYYY-MM-DD"));
+    setDate(incomingDate);
+  };
+
   const handleChange = (value) => setText(value);
   const handleChangeTitle = (e) => setTitle(e.target.value);
   const Back = () => history.push("/");
@@ -59,15 +69,28 @@ const EditNote = (props) => {
     e.preventDefault();
     if (!title) return message.error("Please add title!", 1);
     if (!description) return message.error("Please add description!", 1);
+    if (!date) return message.error("Please add date!", 1);
+    let finalDate = "";
+    if (date instanceof moment) {
+      finalDate = moment(date).format("YYYY-MM-DD");
+      setDate(moment(date).format("YYYY-MM-DD"));
+    } else finalDate = date;
+
     if (type === "add") {
       message.success("Note Added!");
+      console.log("date form comp", date);
       dispatch(
-        addNote({ title, description: description.replace(/<[^>]+>/g, "") })
+        addNote({
+          title,
+          description: description.replace(/<[^>]+>/g, ""),
+          date: finalDate,
+        })
       );
     } else
       dispatch(
         editNote({
           title,
+          date: finalDate,
           description: description.replace(/<[^>]+>/g, ""),
           id,
         })
@@ -77,6 +100,16 @@ const EditNote = (props) => {
 
   return (
     <React.Fragment>
+      <label>Date</label>
+      <DatePicker
+        allowClear={false}
+        defaultValue={date}
+        format="DD/MM/YYYY"
+        style={{ width: 220 }}
+        onChange={changeDate}
+        style={{ marginTop: 20, marginBottom: 20 }}
+      />
+
       <Form style={{ marginTop: 20 }}>
         <Form.Field required>
           <label required>Title</label>
@@ -86,6 +119,7 @@ const EditNote = (props) => {
             value={title}
           />
         </Form.Field>
+
         <ReactQuill
           value={description}
           placeholder="Enter your notes here!"

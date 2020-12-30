@@ -4,7 +4,12 @@ import { DatePicker } from "antd";
 import { Button, Select, Input } from "semantic-ui-react";
 import { useDispatch } from "react-redux";
 import moment from "moment";
-import { sortNotes, searchNote, filterNotes } from "../../actions/notesActions";
+import {
+  sortNotes,
+  searchNote,
+  filterNotes,
+  renderNotes,
+} from "../../actions/notesActions";
 
 const Filters = () => {
   const dispatch = useDispatch();
@@ -17,10 +22,12 @@ const Filters = () => {
   const [, setEndDate] = React.useState("");
 
   const filterDates = (value) => {
+    console.log("val", value);
+    if (value === null) dispatch(renderNotes(true));
+    else dispatch(renderNotes(false));
     // moment conversion to date format
     // 'value' gives object with '_i' property
     // having array of moment date selected
-
     setStartDate(moment(moment(value)._i[0]).format("YYYY-MM-DD"));
     setEndDate(moment(moment(value)._i[1]).format("YYYY-MM-DD"));
 
@@ -44,7 +51,7 @@ const Filters = () => {
   const onChange = (e) => {
     setText(e.target.value);
     dispatch(searchNote(e.target.value));
-  }
+  };
 
   const changeFilter = (e, { value }) => setFilter(value);
   const displayFilter = () => {
@@ -74,8 +81,9 @@ const Filters = () => {
 
   const changeOrder = () => {
     setSort(!sort);
-    if (!sort) dispatch(sortNotes("asc"));
-    else dispatch(sortNotes("desc"));
+    dispatch(sortNotes(sort ? "desc" : "asc"));
+    // if (!sort) dispatch(sortNotes("asc"));
+    // else dispatch(sortNotes("desc"));
   };
 
   return (

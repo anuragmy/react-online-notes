@@ -30,6 +30,11 @@ export const filterNotes = (data) => ({
   payload: data,
 });
 
+export const renderNotes = (data) => ({
+  type: actionTypes.RENDER_NOTES,
+  payload: data,
+});
+
 export const clearDate = () => ({
   type: actionTypes.CLEAR_DATE,
 });
